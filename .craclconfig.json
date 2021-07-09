@@ -1,0 +1,4 @@
+{
+  "monorepo": "packages",
+  "writeApp": "react-components"
+}
