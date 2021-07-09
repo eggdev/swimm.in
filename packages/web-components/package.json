@@ -1,5 +1,5 @@
 {
-  "name": "@eggdev/react-components",
+  "name": "@swimm.in/web-components",
   "version": "0.0.3",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",

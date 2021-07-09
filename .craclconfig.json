@@ -1,4 +1,4 @@
 {
   "monorepo": "packages",
-  "writeApp": "react-components"
+  "writeApp": "web-components"
 }
