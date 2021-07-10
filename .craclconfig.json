@@ -1,4 +1,4 @@
 {
   "monorepo": "packages",
-  "writeApp": "app"
+  "writeDir": "app"
 }

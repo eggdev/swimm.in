@@ -1,11 +1,9 @@
 {
   "expo": {
-    "name": "app",
-    "slug": "app",
+    "name": "swimm.in.clock",
+    "slug": "swimm.in.clock",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"]
   },
-  "name": "app"
+  "name": "swimm.in.clock"
 }

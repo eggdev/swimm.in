@@ -284,6 +284,10 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
+  - ReactNativeUiLib (3.0.4):
+    - React
+  - RNAppleAuthentication (2.1.2):
+    - React-Core
   - RNGestureHandler (1.10.3):
     - React-Core
   - RNReanimated (2.2.0):
@@ -368,6 +372,8 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - ReactNativeUiLib (from `../node_modules/react-native-ui-lib/lib`)
+  - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -456,6 +462,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativeUiLib:
+    :path: "../node_modules/react-native-ui-lib/lib"
+  RNAppleAuthentication:
+    :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -512,6 +522,8 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
+  ReactNativeUiLib: cde7263a7d308b60161cd286f95c9433e79f2f7d
+  RNAppleAuthentication: e95bcfbd044013667f35c5ca20ae17d39500c009
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: d9da990fc90123f4ffbfdda93d00fc15174863a8
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
@@ -521,6 +533,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
-PODFILE CHECKSUM: 827c956884a0c3740c2beb9440d17691e8fb5637
+PODFILE CHECKSUM: 25655507f2dfcff96e3ed38dcd116769badd1070
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1
