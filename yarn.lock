@@ -1232,10 +1232,10 @@
   dependencies:
     chalk "^4.0.0"
 
-"@eggdev/cracl@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@eggdev/cracl/-/cracl-0.5.0.tgz#e527d20a3a8176624b347ef684dc36eda8105602"
-  integrity sha512-wmjCTIL14TgLKctYioWZg1r2ZTwTMTcurSzwb+tcDm4vAzETt4lbwTA2pcL7NQCnNwYsqusL4YuBhDcm1ZJm8w==
+"@eggdev/cracl@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@eggdev/cracl/-/cracl-0.5.1.tgz#da8c64e42f4d6fc4ebb1d8e4f736a4e8d7653010"
+  integrity sha512-GSFBI0g46kWWQRjkp92n5ruwiGOo7lmeIrGPi5yVzmGV0pkCXGFwAA0+6oZDSCo+/eSq+LICjnlsUJxzINmqNg==
   dependencies:
     change-case "^4.1.2"
     dashdash "^2.0.0"
