@@ -1,16 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 
+import PropTypes from 'prop-types';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
 import {View, Button} from 'react-native-ui-lib';
 
 const AuthContext = React.createContext();
 
-function AuthProvider(props) {
+function AuthProvider({children}) {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const checkAuthStatus = async () => {
+    const authResponse = await AsyncStorage.getItem('auth_response');
+    console.log(authResponse);
+    if (authResponse) {
+      setIsLoggedIn(authResponse);
+    }
+  };
 
-  if (isLoggedIn) {
-    return props.children;
-  }
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
 
   const onAppleButtonPress = async () => {
     // performs login request
@@ -28,10 +37,17 @@ function AuthProvider(props) {
     // use credentialState response to ensure the user is authenticated
     if (credentialState === appleAuth.State.AUTHORIZED) {
       // user is authenticated
+      await AsyncStorage.setItem(
+        'auth_response',
+        JSON.stringify(appleAuthRequestResponse)
+      );
       setIsLoggedIn({...appleAuthRequestResponse});
-      // loginOrCreateUser()
     }
   };
+
+  if (isLoggedIn) {
+    return children;
+  }
   return (
     <View center flex>
       <Button
@@ -45,6 +61,10 @@ function AuthProvider(props) {
     </View>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.object,
+};
 
 function useAuth() {
   const context = React.useContext(AuthContext);
