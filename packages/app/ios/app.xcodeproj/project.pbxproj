@@ -314,7 +314,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = swimm.in.clock;
+				PRODUCT_BUNDLE_IDENTIFIER = in.swimm.workouts;
 				PRODUCT_NAME = app;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -339,7 +339,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = swimm.in.clock;
+				PRODUCT_BUNDLE_IDENTIFIER = in.swimm.workouts;
 				PRODUCT_NAME = app;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

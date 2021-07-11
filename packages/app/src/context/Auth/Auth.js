@@ -1,25 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import PropTypes from 'prop-types';
 import {
   AppleButton,
   appleAuth,
 } from '@invertase/react-native-apple-authentication';
-import {View} from 'react-native-ui-lib';
+import {View, Text} from 'react-native-ui-lib';
 
 const AuthContext = React.createContext();
 
-function AuthProvider({children}) {
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+function AuthProvider(props) {
+  const [userData, setUserData] = useState(null);
   const checkAuthStatus = async () => {
     const authResponse = await AsyncStorage.getItem('auth_response');
     if (authResponse) {
       // Make a request to Apple to get most recent user info
       // Then store it and set this to true
-      setIsLoggedIn(null);
-      // setIsLoggedIn(authResponse);
+      // await AsyncStorage.removeItem('auth_response');
+      console.log(authResponse);
+      setUserData(authResponse);
     } else {
-      setIsLoggedIn(null);
+      setUserData(null);
     }
   };
 
@@ -47,14 +47,20 @@ function AuthProvider({children}) {
         'auth_response',
         JSON.stringify(appleAuthRequestResponse)
       );
-      setIsLoggedIn({...appleAuthRequestResponse});
+
+      console.log(appleAuthRequestResponse);
+      setUserData({...appleAuthRequestResponse});
     }
   };
 
-  return isLoggedIn ? (
-    children
+  return userData ? (
+    <AuthContext.Provider value={userData} {...props} />
   ) : (
     <View center flex>
+      <Text text10>Swimm.in</Text>
+      <Text text40L marginB-20>
+        Login to start
+      </Text>
       <AppleButton
         buttonStyle={AppleButton.Style.BLACK}
         buttonType={AppleButton.Type.CONTINUE}
@@ -67,10 +73,6 @@ function AuthProvider({children}) {
     </View>
   );
 }
-
-AuthProvider.propTypes = {
-  children: PropTypes.object,
-};
 
 function useAuth() {
   const context = React.useContext(AuthContext);
