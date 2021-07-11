@@ -1,17 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {View, Card} from 'react-native-ui-lib';
-import service from '../../services';
 
 /**
  *  Dashboard Component
  */
 const Dashboard = ({navigation}) => {
-  const handlePress = async () => {
-    const sets = await service('/sets/');
-    console.log(sets.data.result);
-  };
-
   return (
     <View flex>
       <Card
