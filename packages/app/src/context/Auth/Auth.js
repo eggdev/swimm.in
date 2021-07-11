@@ -4,7 +4,10 @@ import {
   AppleButton,
   appleAuth,
 } from '@invertase/react-native-apple-authentication';
-import {View, Text} from 'react-native-ui-lib';
+import {View, Text, TextField, Button} from 'react-native-ui-lib';
+
+// Change this
+import ENV from './.secret.json';
 
 const AuthContext = React.createContext();
 
@@ -16,8 +19,8 @@ function AuthProvider(props) {
       // Make a request to Apple to get most recent user info
       // Then store it and set this to true
       // await AsyncStorage.removeItem('auth_response');
-      console.log(authResponse);
-      setUserData(authResponse);
+      // console.log(authResponse);
+      // setUserData(null);
     } else {
       setUserData(null);
     }
@@ -53,6 +56,34 @@ function AuthProvider(props) {
     }
   };
 
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleUsername = (evt) => {
+    setUsername(evt.nativeEvent.text);
+  };
+
+  const handlePassword = (evt) => {
+    setPassword(evt.nativeEvent.text);
+  };
+
+  const handleLogin = async () => {
+    const req = await fetch(`http://localhost:8000/auth/login/`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: 'admin',
+        password: ENV.password,
+      }),
+    });
+    const res = await req.json();
+
+    console.log(res);
+  };
+
   return userData ? (
     <AuthContext.Provider value={userData} {...props} />
   ) : (
@@ -61,7 +92,8 @@ function AuthProvider(props) {
       <Text text40L marginB-20>
         Login to start
       </Text>
-      <AppleButton
+
+      {/* <AppleButton
         buttonStyle={AppleButton.Style.BLACK}
         buttonType={AppleButton.Type.CONTINUE}
         style={{
@@ -69,7 +101,18 @@ function AuthProvider(props) {
           height: 45, // You must specify a height
         }}
         onPress={onAppleButtonPress}
+      /> */}
+      <TextField
+        placeholder="username"
+        value={username}
+        onChange={handleUsername}
       />
+      <TextField
+        placeholder="password"
+        onChange={handlePassword}
+        value={password}
+      />
+      <Button label="login" onPress={handleLogin} />
     </View>
   );
 }
