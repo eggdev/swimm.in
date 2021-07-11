@@ -6,6 +6,8 @@ import {
 } from '@invertase/react-native-apple-authentication';
 import {View, Text, TextField, Button} from 'react-native-ui-lib';
 
+import service from '../../services';
+
 // Change this
 import ENV from './.secret.json';
 
@@ -13,6 +15,7 @@ const AuthContext = React.createContext();
 
 function AuthProvider(props) {
   const [userData, setUserData] = useState(null);
+
   const checkAuthStatus = async () => {
     const authResponse = await AsyncStorage.getItem('auth_response');
     if (authResponse) {
@@ -20,7 +23,7 @@ function AuthProvider(props) {
       // Then store it and set this to true
       // await AsyncStorage.removeItem('auth_response');
       // console.log(authResponse);
-      // setUserData(null);
+      setUserData(authResponse);
     } else {
       setUserData(null);
     }
@@ -68,53 +71,46 @@ function AuthProvider(props) {
   };
 
   const handleLogin = async () => {
-    const req = await fetch(`http://localhost:8000/auth/login/`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    const res = await service.post(`/auth/login/`, {
+      data: {
         username: 'admin',
         password: ENV.password,
-      }),
+      },
     });
-    const res = await req.json();
-
-    console.log(res);
   };
 
-  return userData ? (
-    <AuthContext.Provider value={userData} {...props} />
-  ) : (
-    <View center flex>
-      <Text text10>Swimm.in</Text>
-      <Text text40L marginB-20>
-        Login to start
-      </Text>
+  return <AuthContext.Provider value={userData} {...props} />;
+  // return userData ? (
+  //   <AuthContext.Provider value={userData} {...props} />
+  // ) : (
+  //   <View center flex>
+  //     <Text text10>Swimm.in</Text>
+  //     <Text text40L marginB-20>
+  //       Login to start
+  //     </Text>
 
-      {/* <AppleButton
-        buttonStyle={AppleButton.Style.BLACK}
-        buttonType={AppleButton.Type.CONTINUE}
-        style={{
-          width: 160, // You must specify a width
-          height: 45, // You must specify a height
-        }}
-        onPress={onAppleButtonPress}
-      /> */}
-      <TextField
-        placeholder="username"
-        value={username}
-        onChange={handleUsername}
-      />
-      <TextField
-        placeholder="password"
-        onChange={handlePassword}
-        value={password}
-      />
-      <Button label="login" onPress={handleLogin} />
-    </View>
-  );
+  //     <AppleButton
+  //       buttonStyle={AppleButton.Style.BLACK}
+  //       buttonType={AppleButton.Type.CONTINUE}
+  //       style={{
+  //         width: 160, // You must specify a width
+  //         height: 45, // You must specify a height
+  //       }}
+  //       onPress={onAppleButtonPress}
+  //     />
+  //     {/* <TextField
+  //       placeholder="username"
+  //       value={username}
+  //       onChange={handleUsername}
+  //     />
+  //     <TextField
+  //       placeholder="password"
+  //       onChange={handlePassword}
+  //       value={password}
+  //     />
+  //     <Button label="login" onPress={handleLogin} /> */}
+  //   </View>
+  // );
 }
 
 function useAuth() {
