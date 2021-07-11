@@ -6,27 +6,14 @@ import {
 } from '@invertase/react-native-apple-authentication';
 import {View, Text, TextField, Button} from 'react-native-ui-lib';
 
-import service from '../../services';
-
-// Change this
-import ENV from './.secret.json';
-
 const AuthContext = React.createContext();
 
 function AuthProvider(props) {
   const [userData, setUserData] = useState(null);
 
   const checkAuthStatus = async () => {
-    const authResponse = await AsyncStorage.getItem('auth_response');
-    if (authResponse) {
-      // Make a request to Apple to get most recent user info
-      // Then store it and set this to true
-      // await AsyncStorage.removeItem('auth_response');
-      // console.log(authResponse);
-      setUserData(authResponse);
-    } else {
-      setUserData(null);
-    }
+    const user = await AsyncStorage.getItem('user');
+    setUserData(user);
   };
 
   useEffect(() => {
@@ -45,6 +32,8 @@ function AuthProvider(props) {
       appleAuthRequestResponse.user
     );
 
+    // console.log(appleAuthRequestResponse);
+
     // use credentialState response to ensure the user is authenticated
     if (credentialState === appleAuth.State.AUTHORIZED) {
       // user is authenticated
@@ -59,58 +48,27 @@ function AuthProvider(props) {
     }
   };
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  // return <AuthContext.Provider value={userData} {...props} />;
+  return userData ? (
+    <AuthContext.Provider value={userData} {...props} />
+  ) : (
+    <View center flex>
+      <Text text10>Swimm.in</Text>
+      <Text text40L marginB-20>
+        Login to start
+      </Text>
 
-  const handleUsername = (evt) => {
-    setUsername(evt.nativeEvent.text);
-  };
-
-  const handlePassword = (evt) => {
-    setPassword(evt.nativeEvent.text);
-  };
-
-  const handleLogin = async () => {
-    const res = await service.post(`/auth/login/`, {
-      data: {
-        username: 'admin',
-        password: ENV.password,
-      },
-    });
-  };
-
-  return <AuthContext.Provider value={userData} {...props} />;
-  // return userData ? (
-  //   <AuthContext.Provider value={userData} {...props} />
-  // ) : (
-  //   <View center flex>
-  //     <Text text10>Swimm.in</Text>
-  //     <Text text40L marginB-20>
-  //       Login to start
-  //     </Text>
-
-  //     <AppleButton
-  //       buttonStyle={AppleButton.Style.BLACK}
-  //       buttonType={AppleButton.Type.CONTINUE}
-  //       style={{
-  //         width: 160, // You must specify a width
-  //         height: 45, // You must specify a height
-  //       }}
-  //       onPress={onAppleButtonPress}
-  //     />
-  //     {/* <TextField
-  //       placeholder="username"
-  //       value={username}
-  //       onChange={handleUsername}
-  //     />
-  //     <TextField
-  //       placeholder="password"
-  //       onChange={handlePassword}
-  //       value={password}
-  //     />
-  //     <Button label="login" onPress={handleLogin} /> */}
-  //   </View>
-  // );
+      <AppleButton
+        buttonStyle={AppleButton.Style.BLACK}
+        buttonType={AppleButton.Type.CONTINUE}
+        style={{
+          width: 160, // You must specify a width
+          height: 45, // You must specify a height
+        }}
+        onPress={onAppleButtonPress}
+      />
+    </View>
+  );
 }
 
 function useAuth() {
