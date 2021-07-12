@@ -9,12 +9,13 @@ import SetListItem from '../../components/SetListItem';
  */
 const SetsDisplay = (props) => {
   const [setsList, setSetsList] = useState([]);
-  const [showNewSetModal, setShowNewSetModal] = useState(true);
+  const [showNewSetModal, setShowNewSetModal] = useState(false);
 
   const fetchSets = async () => {
     const {data} = await service('/sets/');
     setSetsList(data.results);
   };
+
   useEffect(() => {
     fetchSets();
   }, []);
@@ -23,8 +24,11 @@ const SetsDisplay = (props) => {
     setShowNewSetModal(true);
   };
 
-  const handleNewSetSubmit = (values) => {
-    console.log(values);
+  const handleNewSetSubmit = async (values) => {
+    const res = await service.post('/sets/', {
+      ...values,
+    });
+    console.log(res);
   };
 
   return (
@@ -34,7 +38,7 @@ const SetsDisplay = (props) => {
           No sets. Please make one
         </Text>
       ) : (
-        setsList.map((set) => <SetListItem key={set.id} setDetails={set} />)
+        setsList.map((set) => <SetListItem key={set.id} set={set} />)
       )}
       <Button label="Add New Set" onPress={handlePress} />
       <NewSetModal

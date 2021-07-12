@@ -4,11 +4,14 @@ import {ListItem, Drawer, Text} from 'react-native-ui-lib';
 /**
  *  SetListItem Component
  */
-const SetListItem = (props) => {
+const SetListItem = ({set}) => {
+  console.log();
   return (
-    <ListItem containerElement={Drawer}>
+    <ListItem>
       <ListItem.Part>
-        <Text>Item</Text>
+        <Text>
+          {set.repetitions} x {set.distance} @ {set.interval}
+        </Text>
       </ListItem.Part>
     </ListItem>
   );
